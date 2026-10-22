@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajasthan Jobs Question Bank</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f4e8e0 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #2b1a12;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #c1440e 0%, #d97706 100%);
+    border-radius: 14px;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(193,68,14,0.25);
+  }
+  .header h1 { font-size: 26px; margin-bottom: 6px; }
+  .header p { font-size: 13px; opacity: 0.92; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  select, input[type="text"], button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #e0d5cc;
+    font-size: 14px;
+    background: #fff;
+    color: #2b1a12;
+    font-family: inherit;
+  }
+  input[type="text"] { min-width: 200px; flex: 1; max-width: 320px; }
+  select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #c1440e;
+    box-shadow: 0 0 0 3px rgba(193,68,14,0.12);
+  }
+  button { cursor: pointer; font-weight: 600; transition: all 0.15s; }
+  button.primary {
+    background: #c1440e;
+    color: #fff;
+    border: none;
+  }
+  button.primary:hover { background: #a33609; }
+  button.secondary {
+    background: #fff;
+    color: #c1440e;
+    border: 1.5px solid #c1440e;
+  }
+  button.secondary:hover { background: #fdf0e8; }
+
+  .stats {
+    text-align: center;
+    color: #7a5c4a;
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .question-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 5px solid #c1440e;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .question-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  }
+  .q-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .q-tag {
+    background: #2b1a12;
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  .subject-tag {
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 12px 14px;
+    border: 1.5px solid #e8ddd5;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    resize: vertical;
+    background: #fdfaf7;
+    color: #2b1a12;
+  }
+  textarea:focus { outline: none; border-color: #c1440e; }
+  .copy-btn {
+    margin-top: 10px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .copy-btn:hover { background: #15803d; }
+  .copy-btn.copied { background: #6b7280; }
+
+  .empty-msg {
+    text-align: center;
+    color: #a08c7d;
+    padding: 40px;
+    font-size: 15px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    color: #a08c7d;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 20px; }
+    .controls { flex-direction: column; }
+    select, input[type="text"], button { width: 100%; }
+    input[type="text"] { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏛️ Rajasthan Jobs Question Bank</h1>
+  <p>Rajasthan GK • Current Affairs • India GK • Reasoning • Maths • Hindi</p>
+</div>
+
+<div class="controls">
+  <select id="subjectFilter">
+    <option value="all">All Subjects</option>
+    <option value="rajasthan_gk">Rajasthan GK</option>
+    <option value="current_affairs">Current Affairs</option>
+    <option value="india_gk">India GK</option>
+    <option value="reasoning">Reasoning</option>
+    <option value="maths">Maths</option>
+    <option value="hindi">Hindi</option>
+  </select>
+  <select id="dayFilter">
+    <option value="all">All Days</option>
+  </select>
+  <input type="text" id="searchBox" placeholder="🔍 Search question...">
+  <button class="primary" onclick="copyAll()">📋 Copy All Visible</button>
+  <button class="secondary" onclick="downloadJSON()">💾 Download JSON</button>
+</div>
+
+<div class="stats" id="stats"></div>
+<div id="questionsContainer"></div>
+
+<div class="footer">
+  Rajasthan Jobs Question Bank • Bilingual (Hindi + English) • Copy-ready format
+</div>
+
+<script>
+/* ============================================================
+   QUESTION DATA
+   ------------------------------------------------------------
+   Format:
+   {
+     day: 1,
+     subject: "rajasthan_gk" | "current_affairs" | "india_gk" |
+              "reasoning" | "maths" | "hindi",
+     qno: 1,
+     hindi: "प्रश्न हिंदी में",
+     english: "Question in English",
+     options: [
+       { hi: "विकल्प", en: "Option", correct: true/false },
+       ...
+     ]
+   }
+   ============================================================ */
+
+const questions = [
+
+  /* ============================================================
+     DAY 1 - RAJASTHAN GK
+     ============================================================ */
+  { day:1, subject:"rajasthan_gk", qno:1, hindi:"राजस्थान का सबसे बड़ा जिला (क्षेत्रफल में) कौन सा है?", english:"Which is the largest district of Rajasthan by area?", options:[{hi:"बीकानेर",en:"Bikaner",correct:false},{hi:"जैसलमेर",en:"Jaisalmer",correct:true},{hi:"बाड़मेर",en:"Barmer",correct:false},{hi:"जोधपुर",en:"Jodhpur",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:2, hindi:"राजस्थान की राजधानी कौन सी है?", english:"What is the capital of Rajasthan?", options:[{hi:"जोधपुर",en:"Jodhpur",correct:false},{hi:"उदयपुर",en:"Udaipur",correct:false},{hi:"जयपुर",en:"Jaipur",correct:true},{hi:"कोटा",en:"Kota",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:3, hindi:"राजस्थान का राज्य पशु कौन है?", english:"What is the state animal of Rajasthan?", options:[{hi:"चिंकारा",en:"Chinkara",correct:true},{hi:"बाघ",en:"Tiger",correct:false},{hi:"हिरण",en:"Deer",correct:false},{hi:"नीलगाय",en:"Nilgai",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:4, hindi:"राजस्थान का राज्य पक्षी कौन है?", english:"What is the state bird of Rajasthan?", options:[{hi:"मोर",en:"Peacock",correct:false},{hi:"गोडावण",en:"Great Indian Bustard",correct:true},{hi:"सारस",en:"Crane",correct:false},{hi:"कबूतर",en:"Pigeon",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:5, hindi:"राजस्थान का राज्य वृक्ष कौन है?", english:"What is the state tree of Rajasthan?", options:[{hi:"नीम",en:"Neem",correct:false},{hi:"पीपल",en:"Peepal",correct:false},{hi:"खेजड़ी",en:"Khejri",correct:true},{hi:"बरगद",en:"Banyan",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:6, hindi:"राजस्थान का राज्य फूल कौन है?", english:"What is the state flower of Rajasthan?", options:[{hi:"गुलाब",en:"Rose",correct:false},{hi:"रोहिड़ा",en:"Rohida",correct:true},{hi:"कमल",en:"Lotus",correct:false},{hi:"चमेली",en:"Jasmine",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:7, hindi:"राजस्थान का सबसे ऊँचा पर्वत शिखर कौन सा है?", english:"Which is the highest mountain peak of Rajasthan?", options:[{hi:"गुरु शिखर",en:"Guru Shikhar",correct:true},{hi:"तारागढ़",en:"Taragarh",correct:false},{hi:"अरावली",en:"Aravalli",correct:false},{hi:"माउंट आबू",en:"Mount Abu",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:8, hindi:"राजस्थान की सबसे लंबी नदी कौन सी है?", english:"Which is the longest river of Rajasthan?", options:[{hi:"बनास",en:"Banas",correct:false},{hi:"लूनी",en:"Luni",correct:false},{hi:"चंबल",en:"Chambal",correct:true},{hi:"साबरमती",en:"Sabarmati",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:9, hindi:"राजस्थान का सबसे छोटा जिला (क्षेत्रफल में) कौन सा है?", english:"Which is the smallest district of Rajasthan by area?", options:[{hi:"धौलपुर",en:"Dholpur",correct:true},{hi:"जयपुर",en:"Jaipur",correct:false},{hi:"टोंक",en:"Tonk",correct:false},{hi:"अलवर",en:"Alwar",correct:false}] },
+  { day:1, subject:"rajasthan_gk", qno:10, hindi:"'राजस्थान का कश्मीर' किसे कहा जाता है?", english:"Which place is called the 'Kashmir of Rajasthan'?", options:[{hi:"माउंट आबू",en:"Mount Abu",correct:false},{hi:"उदयपुर",en:"Udaipur",correct:false},{hi:"अलवर",en:"Alwar",correct:false},{hi:"माउंट आबू (सिरोही)",en:"Mount Abu (Sirohi)",correct:true}] },
+
+  /* ============================================================
+     DAY 1 - CURRENT AFFAIRS
+     (Note: Current affairs ko regular update karte raho)
+     ============================================================ */
+  { day:1, subject:"current_affairs", qno:1, hindi:"भारत के वर्तमान राष्ट्रपति कौन हैं?", english:"Who is the current President of India?", options:[{hi:"रामनाथ कोविंद",en:"Ram Nath Kovind",correct:false},{hi:"द्रौपदी मुर्मू",en:"Droupadi Murmu",correct:true},{hi:"प्रणब मुखर्जी",en:"Pranab Mukherjee",correct:false},{hi:"ए.पी.जे. अब्दुल कलाम",en:"A.P.J. Abdul Kalam",correct:false}] },
+  { day:1, subject:"current_affairs", qno:2, hindi:"ओलंपिक 2024 किस शहर में आयोजित हुए?", english:"Olympics 2024 were held in which city?", options:[{hi:"टोक्यो",en:"Tokyo",correct:false},{hi:"पेरिस",en:"Paris",correct:true},{hi:"लंदन",en:"London",correct:false},{hi:"रियो डी जनेरियो",en:"Rio de Janeiro",correct:false}] },
+  { day:1, subject:"current_affairs", qno:3, hindi:"2024 के बाद भारत के प्रधानमंत्री कौन हैं?", english:"Who is the Prime Minister of India after 2024?", options:[{hi:"नरेंद्र मोदी",en:"Narendra Modi",correct:true},{hi:"राहुल गांधी",en:"Rahul Gandhi",correct:false},{hi:"अमित शाह",en:"Amit Shah",correct:false},{hi:"मनमोहन सिंह",en:"Manmohan Singh",correct:false}] },
+  { day:1, subject:"current_affairs", qno:4, hindi:"चंद्रयान-3 भारत ने कब लैंड किया?", english:"When did India land Chandrayaan-3?", options:[{hi:"23 अगस्त 2023",en:"23 August 2023",correct:true},{hi:"15 अगस्त 2023",en:"15 August 2023",correct:false},{hi:"5 सितंबर 2023",en:"5 September 2023",correct:false},{hi:"23 अगस्त 2024",en:"23 August 2024",correct:false}] },
+  { day:1, subject:"current_affairs", qno:5, hindi:"G20 शिखर सम्मेलन 2023 कहाँ हुआ?", english:"Where was G20 Summit 2023 held?", options:[{hi:"बाली",en:"Bali",correct:false},{hi:"नई दिल्ली",en:"New Delhi",correct:true},{hi:"रोम",en:"Rome",correct:false},{hi:"लंदन",en:"London",correct:false}] },
+  { day:1, subject:"current_affairs", qno:6, hindi:"राजस्थान के वर्तमान मुख्यमंत्री कौन हैं?", english:"Who is the current Chief Minister of Rajasthan?", options:[{hi:"अशोक गहलोत",en:"Ashok Gehlot",correct:false},{hi:"वसुंधरा राजे",en:"Vasundhara Raje",correct:false},{hi:"भजनलाल शर्मा",en:"Bhajan Lal Sharma",correct:true},{hi:"सचिन पायलट",en:"Sachin Pilot",correct:false}] },
+  { day:1, subject:"current_affairs", qno:7, hindi:"राजस्थान के वर्तमान राज्यपाल कौन हैं?", english:"Who is the current Governor of Rajasthan?", options:[{hi:"कलराज मिश्र",en:"Kalraj Mishra",correct:false},{hi:"हरिभाऊ बागडे",en:"Haribhau Bagade",correct:true},{hi:"मार्गरेट अल्वा",en:"Margaret Alva",correct:false},{hi:"कमला बेनीवाल",en:"Kamla Beniwal",correct:false}] },
+  { day:1, subject:"current_affairs", qno:8, hindi:"नोबेल शांति पुरस्कार 2024 किसे मिला?", english:"Who won Nobel Peace Prize 2024?", options:[{hi:"निहोन हिदान्क्यो",en:"Nihon Hidankyo",correct:true},{hi:"मलाला यूसुफजई",en:"Malala Yousafzai",correct:false},{hi:"ग्रेटा थनबर्ग",en:"Greta Thunberg",correct:false},{hi:"डेनिस मुकवेगे",en:"Denis Mukwege",correct:false}] },
+  { day:1, subject:"current_affairs", qno:9, hindi:"भारत का चालू वित्त वर्ष कब से शुरू होता है?", english:"India's financial year starts from?", options:[{hi:"1 जनवरी",en:"1 January",correct:false},{hi:"1 अप्रैल",en:"1 April",correct:true},{hi:"1 जुलाई",en:"1 July",correct:false},{hi:"1 अक्टूबर",en:"1 October",correct:false}] },
+  { day:1, subject:"current_affairs", qno:10, hindi:"'मेक इन इंडिया' योजना कब शुरू हुई?", english:"When was 'Make in India' scheme launched?", options:[{hi:"2014",en:"2014",correct:true},{hi:"2015",en:"2015",correct:false},{hi:"2016",en:"2016",correct:false},{hi:"2017",en:"2017",correct:false}] },
+
+  /* ============================================================
+     DAY 1 - INDIA GK
+     ============================================================ */
+  { day:1, subject:"india_gk", qno:1, hindi:"भारत की राजधानी क्या है?", english:"What is the capital of India?", options:[{hi:"मुंबई",en:"Mumbai",correct:false},{hi:"नई दिल्ली",en:"New Delhi",correct:true},{hi:"कोलकाता",en:"Kolkata",correct:false},{hi:"चेन्नई",en:"Chennai",correct:false}] },
+  { day:1, subject:"india_gk", qno:2, hindi:"भारत का राष्ट्रीय पशु कौन है?", english:"What is the national animal of India?", options:[{hi:"शेर",en:"Lion",correct:false},{hi:"हाथी",en:"Elephant",correct:false},{hi:"बाघ",en:"Tiger",correct:true},{hi:"मोर",en:"Peacock",correct:false}] },
+  { day:1, subject:"india_gk", qno:3, hindi:"भारत का राष्ट्रीय पक्षी कौन है?", english:"What is the national bird of India?", options:[{hi:"मोर",en:"Peacock",correct:true},{hi:"तोता",en:"Parrot",correct:false},{hi:"कबूतर",en:"Pigeon",correct:false},{hi:"बाज",en:"Falcon",correct:false}] },
+  { day:1, subject:"india_gk", qno:4, hindi:"क्षेत्रफल के अनुसार भारत का सबसे बड़ा राज्य कौन सा है?", english:"Largest state of India by area?", options:[{hi:"मध्य प्रदेश",en:"Madhya Pradesh",correct:false},{hi:"राजस्थान",en:"Rajasthan",correct:true},{hi:"महाराष्ट्र",en:"Maharashtra",correct:false},{hi:"उत्तर प्रदेश",en:"Uttar Pradesh",correct:false}] },
+  { day:1, subject:"india_gk", qno:5, hindi:"भारत की सबसे लंबी नदी कौन सी है?", english:"Which is the longest river of India?", options:[{hi:"यमुना",en:"Yamuna",correct:false},{hi:"गंगा",en:"Ganga",correct:true},{hi:"ब्रह्मपुत्र",en:"Brahmaputra",correct:false},{hi:"गोदावरी",en:"Godavari",correct:false}] },
+  { day:1, subject:"india_gk", qno:6, hindi:"भारत का सबसे ऊँचा पर्वत शिखर (भारत में) कौन सा है?", english:"Highest mountain peak in India?", options:[{hi:"एवरेस्ट",en:"Everest",correct:false},{hi:"कंचनजंगा",en:"Kangchenjunga",correct:true},{hi:"नंदा देवी",en:"Nanda Devi",correct:false},{hi:"के2",en:"K2",correct:false}] },
+  { day:1, subject:"india_gk", qno:7, hindi:"भारतीय संविधान के जनक किसे कहा जाता है?", english:"Who is called the Father of the Indian Constitution?", options:[{hi:"महात्मा गांधी",en:"Mahatma Gandhi",correct:false},{hi:"जवाहरलाल नेहरू",en:"Jawaharlal Nehru",correct:false},{hi:"डॉ. बी.आर. आंबेडकर",en:"Dr. B.R. Ambedkar",correct:true},{hi:"सरदार पटेल",en:"Sardar Patel",correct:false}] },
+  { day:1, subject:"india_gk", qno:8, hindi:"भारत के पहले राष्ट्रपति कौन थे?", english:"Who was the first President of India?", options:[{hi:"डॉ. राजेंद्र प्रसाद",en:"Dr. Rajendra Prasad",correct:true},{hi:"डॉ. राधाकृष्णन",en:"Dr. Radhakrishnan",correct:false},{hi:"जाकिर हुसैन",en:"Zakir Hussain",correct:false},{hi:"वी.वी. गिरी",en:"V.V. Giri",correct:false}] },
+  { day:1, subject:"india_gk", qno:9, hindi:"भारत के पहले प्रधानमंत्री कौन थे?", english:"Who was the first Prime Minister of India?", options:[{hi:"सरदार पटेल",en:"Sardar Patel",correct:false},{hi:"पं. जवाहरलाल नेहरू",en:"Pt. Jawaharlal Nehru",correct:true},{hi:"लाल बहादुर शास्त्री",en:"Lal Bahadur Shastri",correct:false},{hi:"राजेंद्र प्रसाद",en:"Rajendra Prasad",correct:false}] },
+  { day:1, subject:"india_gk", qno:10, hindi:"भारत में कुल कितने राज्य हैं?", english:"How many states are there in India?", options:[{hi:"27",en:"27",correct:false},{hi:"28",en:"28",correct:true},{hi:"29",en:"29",correct:false},{hi:"30",en:"30",correct:false}] },
+
+  /* ============================================================
+     DAY 1 - REASONING
+     ============================================================ */
+  { day:1, subject:"reasoning", qno:1, hindi:"अगली संख्या ज्ञात करें: 3, 6, 11, 18, 27, ?", english:"Find next number: 3, 6, 11, 18, 27, ?", options:[{hi:"36",en:"36",correct:false},{hi:"38",en:"38",correct:true},{hi:"40",en:"40",correct:false},{hi:"42",en:"42",correct:false}] },
+  { day:1, subject:"reasoning", qno:2, hindi:"यदि CAT = 3120, तो DOG = ?", english:"If CAT = 3120, then DOG = ?", options:[{hi:"4157",en:"4157",correct:true},{hi:"4156",en:"4156",correct:false},{hi:"4167",en:"4167",correct:false},{hi:"4147",en:"4147",correct:false}] },
+  { day:1, subject:"reasoning", qno:3, hindi:"एक तस्वीर की ओर इशारा करते हुए रवि ने कहा, 'वह मेरी माँ के इकलौते बेटे की बेटी है।' वह रवि से कैसे संबंधित है?", english:"Pointing to a photo, Ravi said, 'She is the daughter of my mother's only son.' How is she related to Ravi?", options:[{hi:"बहन",en:"Sister",correct:false},{hi:"बेटी",en:"Daughter",correct:true},{hi:"भतीजी",en:"Niece",correct:false},{hi:"माँ",en:"Mother",correct:false}] },
+  { day:1, subject:"reasoning", qno:4, hindi:"एक व्यक्ति 5 किमी उत्तर चलता है, फिर दाएँ मुड़कर 3 किमी चलता है। अब वह किस दिशा में है?", english:"A man walks 5 km north, then turns right and walks 3 km. Which direction is he facing now?", options:[{hi:"उत्तर",en:"North",correct:false},{hi:"दक्षिण",en:"South",correct:false},{hi:"पूर्व",en:"East",correct:true},{hi:"पश्चिम",en:"West",correct:false}] },
+  { day:1, subject:"reasoning", qno:5, hindi:"विषम चुनें: 3, 5, 7, 9, 11", english:"Find the odd one: 3, 5, 7, 9, 11", options:[{hi:"3",en:"3",correct:false},{hi:"5",en:"5",correct:false},{hi:"7",en:"7",correct:false},{hi:"9",en:"9",correct:true}] },
+  { day:1, subject:"reasoning", qno:6, hindi:"विषम चुनें: सेब, केला, गाजर, आम", english:"Find the odd one: Apple, Banana, Carrot, Mango", options:[{hi:"सेब",en:"Apple",correct:false},{hi:"केला",en:"Banana",correct:false},{hi:"गाजर",en:"Carrot",correct:true},{hi:"आम",en:"Mango",correct:false}] },
+  { day:1, subject:"reasoning", qno:7, hindi:"यदि 5 पेन की कीमत ₹40 है, तो 8 पेन की कीमत क्या होगी?", english:"If 5 pens cost ₹40, what will 8 pens cost?", options:[{hi:"₹56",en:"₹56",correct:false},{hi:"₹64",en:"₹64",correct:true},{hi:"₹72",en:"₹72",correct:false},{hi:"₹80",en:"₹80",correct:false}] },
+  { day:1, subject:"reasoning", qno:8, hindi:"एक कक्षा में रवि ऊपर से 7वें और नीचे से 12वें स्थान पर है। कुल कितने छात्र हैं?", english:"In a class, Ravi is 7th from top and 12th from bottom. Total students?", options:[{hi:"17",en:"17",correct:false},{hi:"18",en:"18",correct:true},{hi:"19",en:"19",correct:false},{hi:"20",en:"20",correct:false}] },
+  { day:1, subject:"reasoning", qno:9, hindi:"पुस्तक : अध्याय :: भवन : ?", english:"Book : Chapter :: Building : ?", options:[{hi:"ईंट",en:"Brick",correct:false},{hi:"फर्श",en:"Floor",correct:true},{hi:"खिड़की",en:"Window",correct:false},{hi:"छत",en:"Roof",correct:false}] },
+  { day:1, subject:"reasoning", qno:10, hindi:"अगली आकृति: वर्ग, वृत्त, त्रिभुज, वर्ग, वृत्त, ?", english:"Next shape: Square, Circle, Triangle, Square, Circle, ?", options:[{hi:"त्रिभुज",en:"Triangle",correct:true},{hi:"वर्ग",en:"Square",correct:false},{hi:"वृत्त",en:"Circle",correct:false},{hi:"आयत",en:"Rectangle",correct:false}] },
+
+  /* ============================================================
+     DAY 1 - MATHS
+     ============================================================ */
+  { day:1, subject:"maths", qno:1, hindi:"800 का 45% = ?", english:"45% of 800 = ?", options:[{hi:"320",en:"320",correct:false},{hi:"360",en:"360",correct:true},{hi:"400",en:"400",correct:false},{hi:"440",en:"440",correct:false}] },
+  { day:1, subject:"maths", qno:2, hindi:"₹5000 पर 10% वार्षिक दर से 2 वर्ष का साधारण ब्याज?", english:"Simple Interest on ₹5000 at 10% per annum for 2 years?", options:[{hi:"₹500",en:"₹500",correct:false},{hi:"₹1000",en:"₹1000",correct:true},{hi:"₹1500",en:"₹1500",correct:false},{hi:"₹2000",en:"₹2000",correct:false}] },
+  { day:1, subject:"maths", qno:3, hindi:"5 संख्याओं का औसत 27 है। एक संख्या हटाने पर औसत 25 हो जाता है। हटाई गई संख्या ज्ञात करें।", english:"Average of 5 numbers is 27. If one number is excluded, average becomes 25. Find the excluded number.", options:[{hi:"30",en:"30",correct:false},{hi:"35",en:"35",correct:true},{hi:"40",en:"40",correct:false},{hi:"45",en:"45",correct:false}] },
+  { day:1, subject:"maths", qno:4, hindi:"एक ट्रेन 4 घंटे में 360 किमी चलती है। उसकी गति क्या है?", english:"A train covers 360 km in 4 hours. What is its speed?", options:[{hi:"80 किमी/घंटा",en:"80 km/h",correct:false},{hi:"90 किमी/घंटा",en:"90 km/h",correct:true},{hi:"100 किमी/घंटा",en:"100 km/h",correct:false},{hi:"120 किमी/घंटा",en:"120 km/h",correct:false}] },
+  { day:1, subject:"maths", qno:5, hindi:"यदि 8 आदमी एक काम 12 दिनों में कर सकते हैं, तो 6 आदमी कितने दिनों में करेंगे?", english:"If 8 men can do a work in 12 days, how many days will 6 men take?", options:[{hi:"14",en:"14",correct:false},{hi:"16",en:"16",correct:true},{hi:"18",en:"18",correct:false},{hi:"20",en:"20",correct:false}] },
+  { day:1, subject:"maths", qno:6, hindi:"दो संख्याओं का अनुपात 3:4 है और उनका योग 84 है। संख्याएँ ज्ञात करें।", english:"Ratio of two numbers is 3:4 and their sum is 84. Find the numbers.", options:[{hi:"36, 48",en:"36, 48",correct:true},{hi:"30, 54",en:"30, 54",correct:false},{hi:"24, 60",en:"24, 60",correct:false},{hi:"42, 42",en:"42, 42",correct:false}] },
+  { day:1, subject:"maths", qno:7, hindi:"क्रय मूल्य = ₹200, विक्रय मूल्य = ₹250. लाभ % = ?", english:"CP = ₹200, SP = ₹250. Profit % = ?", options:[{hi:"20%",en:"20%",correct:false},{hi:"25%",en:"25%",correct:true},{hi:"30%",en:"30%",correct:false},{hi:"50%",en:"50%",correct:false}] },
+  { day:1, subject:"maths", qno:8, hindi:"7 सेमी त्रिज्या वाले वृत्त का क्षेत्रफल? (π = 22/7)", english:"Area of circle with radius 7 cm? (π = 22/7)", options:[{hi:"144 सेमी²",en:"144 cm²",correct:false},{hi:"154 सेमी²",en:"154 cm²",correct:true},{hi:"164 सेमी²",en:"164 cm²",correct:false},{hi:"174 सेमी²",en:"174 cm²",correct:false}] },
+  { day:1, subject:"maths", qno:9, hindi:"2/3 + 3/4 = ?", english:"2/3 + 3/4 = ?", options:[{hi:"5/7",en:"5/7",correct:false},{hi:"17/12",en:"17/12",correct:true},{hi:"6/7",en:"6/7",correct:false},{hi:"1 1/12",en:"1 1/12",correct:false}] },
+  { day:1, subject:"maths", qno:10, hindi:"₹1200 पर 15% छूट = ?", english:"15% discount on ₹1200 = ?", options:[{hi:"₹1000",en:"₹1000",correct:false},{hi:"₹1020",en:"₹1020",correct:true},{hi:"₹1050",en:"₹1050",correct:false},{hi:"₹1080",en:"₹1080",correct:false}] },
+
+  /* ============================================================
+     DAY 1 - HINDI
+     ============================================================ */
+  { day:1, subject:"hindi", qno:1, hindi:"'सूर्य' का पर्यायवाची शब्द कौन सा है?", english:"Synonym of 'Surya' (Sun)?", options:[{hi:"रवि",en:"Ravi",correct:true},{hi:"चंद्र",en:"Chandra",correct:false},{hi:"तारा",en:"Tara",correct:false},{hi:"नक्षत्र",en:"Nakshatra",correct:false}] },
+  { day:1, subject:"hindi", qno:2, hindi:"'अंधकार' का विलोम शब्द क्या है?", english:"Antonym of 'Andhakar' (Darkness)?", options:[{hi:"रात",en:"Raat",correct:false},{hi:"प्रकाश",en:"Prakash",correct:true},{hi:"छाया",en:"Chhaya",correct:false},{hi:"काला",en:"Kaala",correct:false}] },
+  { day:1, subject:"hindi", qno:3, hindi:"'कमल' का पर्यायवाची शब्द कौन सा है?", english:"Synonym of 'Kamal' (Lotus)?", options:[{hi:"पंकज",en:"Pankaj",correct:true},{hi:"कुसुम",en:"Kusum",correct:false},{hi:"सुमन",en:"Suman",correct:false},{hi:"पुष्प",en:"Pushp",correct:false}] },
+  { day:1, subject:"hindi", qno:4, hindi:"'पुस्तक' का बहुवचन क्या है?", english:"Plural of 'Pustak' (Book)?", options:[{hi:"पुस्तकें",en:"Pustakein",correct:true},{hi:"पुस्तकों",en:"Pustakon",correct:false},{hi:"पुस्तका",en:"Pustaka",correct:false},{hi:"पुस्तकी",en:"Pustaki",correct:false}] },
+  { day:1, subject:"hindi", qno:5, hindi:"मुहावरा: 'अंधे की लाठी' का अर्थ क्या है?", english:"Idiom: 'Andhe ki Lathi' means?", options:[{hi:"बहुत मारना",en:"Beat someone",correct:false},{hi:"एकमात्र सहारा",en:"Only support",correct:true},{hi:"रास्ता दिखाना",en:"Show the way",correct:false},{hi:"अंधेरे में रहना",en:"Live in dark",correct:false}] },
+  { day:1, subject:"hindi", qno:6, hindi:"'नरेंद्र' शब्द में कौन सी संधि है? (नर + इंद्र)", english:"Which sandhi is in 'Narendra'? (Nar + Indra)", options:[{hi:"गुण संधि",en:"Guna Sandhi",correct:true},{hi:"यण् संधि",en:"Yan Sandhi",correct:false},{hi:"वृद्धि संधि",en:"Vriddhi Sandhi",correct:false},{hi:"अयादि संधि",en:"Ayadi Sandhi",correct:false}] },
+  { day:1, subject:"hindi", qno:7, hindi:"'राजपुत्र' में कौन सा समास है?", english:"Which samas is in 'Rajputra'?", options:[{hi:"द्वंद्व समास",en:"Dwandwa",correct:false},{hi:"तत्पुरुष समास",en:"Tatpurush",correct:true},{hi:"बहुव्रीहि समास",en:"Bahuvrihi",correct:false},{hi:"अव्ययीभाव समास",en:"Avyayibhav",correct:false}] },
+  { day:1, subject:"hindi", qno:8, hindi:"हिंदी वर्णमाला में स्वर कितने होते हैं?", english:"How many vowels in Hindi alphabet?", options:[{hi:"9",en:"9",correct:false},{hi:"10",en:"10",correct:false},{hi:"11",en:"11",correct:true},{hi:"12",en:"12",correct:false}] },
+  { day:1, subject:"hindi", qno:9, hindi:"'माता' का पर्यायवाची शब्द कौन सा है?", english:"Synonym of 'Mata' (Mother)?", options:[{hi:"जननी",en:"Janani",correct:true},{hi:"पिता",en:"Pita",correct:false},{hi:"भगिनी",en:"Bhagini",correct:false},{hi:"सुता",en:"Suta",correct:false}] },
+  { day:1, subject:"hindi", qno:10, hindi:"'हिमालय' का पर्यायवाची शब्द कौन सा है?", english:"Synonym of 'Himalaya'?", options:[{hi:"पर्वतराज",en:"Parvatraj",correct:true},{hi:"सागर",en:"Sagar",correct:false},{hi:"पृथ्वी",en:"Prithvi",correct:false},{hi:"आकाश",en:"Aakash",correct:false}] }
+
+  /* ============================================================
+     YAHAN AAGE DAY 2, DAY 3... KE QUESTIONS ADD KARTE JAAO
+     Bas upar wale format mein comma lagakar paste karo.
+     ============================================================ */
+
+];
+
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const subjectNames = {
+  rajasthan_gk: "Rajasthan GK",
+  current_affairs: "Current Affairs",
+  india_gk: "India GK",
+  reasoning: "Reasoning",
+  maths: "Maths",
+  hindi: "Hindi"
+};
+
+const subjectColors = {
+  rajasthan_gk: "#d97706",
+  current_affairs: "#dc2626",
+  india_gk: "#16a34a",
+  reasoning: "#c1440e",
+  maths: "#2563eb",
+  hindi: "#9333ea"
+};
+
+/* ============================================================
+   RENDERING LOGIC
+   ============================================================ */
+function formatQuestion(q) {
+  let text = `Q${q.qno}. ${q.hindi}\n${q.english}\n`;
+  const labels = ["A", "B", "C", "D"];
+  q.options.forEach((opt, i) => {
+    const tick = opt.correct ? " ✓" : "";
+    text += `${labels[i]}) ${opt.hi} / ${opt.en}${tick}\n`;
+  });
+  return text.trim();
+}
+
+function getFiltered() {
+  const subject = document.getElementById('subjectFilter').value;
+  const day = document.getElementById('dayFilter').value;
+  const search = document.getElementById('searchBox').value.trim().toLowerCase();
+
+  return questions.filter(q => {
+    if (subject !== 'all' && q.subject !== subject) return false;
+    if (day !== 'all' && String(q.day) !== day) return false;
+    if (search) {
+      const hay = (q.hindi + " " + q.english + " " +
+        q.options.map(o => o.hi + " " + o.en).join(" ")).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+}
+
+function render() {
+  const filtered = getFiltered();
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  document.getElementById('stats').textContent =
+    `Showing ${filtered.length} of ${questions.length} questions`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p class="empty-msg">😕 No questions found. Filter change karke dekho.</p>';
+    return;
+  }
+
+  filtered.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.style.borderLeftColor = subjectColors[q.subject] || '#c1440e';
+
+    const header = document.createElement('div');
+    header.className = 'q-header';
+    header.innerHTML = `
+      <span class="q-tag">Q${q.qno}</span>
+      <span class="subject-tag" style="background:${subjectColors[q.subject]}18;color:${subjectColors[q.subject]};">
+        ${subjectNames[q.subject]} • Day ${q.day}
+      </span>
+    `;
+
+    const ta = document.createElement('textarea');
+    ta.id = `q-${idx}`;
+    ta.value = formatQuestion(q);
+    ta.readOnly = true;
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '📋 Copy';
+    btn.onclick = () => {
+      ta.select();
+      document.execCommand('copy');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(ta.value).catch(() => {});
+      }
+      btn.textContent = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Copy';
+        btn.classList.remove('copied');
+      }, 1500);
+    };
+
+    card.appendChild(header);
+    card.appendChild(ta);
+    card.appendChild(btn);
+    container.appendChild(card);
+  });
+}
+
+function copyAll() {
+  const filtered = getFiltered();
+  if (filtered.length === 0) { alert('Koi question visible nahi hai.'); return; }
+  const all = filtered.map(formatQuestion).join('\n\n---\n\n');
+  navigator.clipboard.writeText(all).then(() => {
+    alert(`✅ ${filtered.length} questions clipboard mein copy ho gaye!`);
+  }).catch(() => {
+    alert('Copy nahi ho paya. Browser permission check karo.');
+  });
+}
+
+function downloadJSON() {
+  const dataStr = JSON.stringify(questions, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'rajasthan-jobs-questions.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function populateDays() {
+  const days = [...new Set(questions.map(q => q.day))].sort((a,b)=>a-b);
+  const sel = document.getElementById('dayFilter');
+  days.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = `Day ${d}`;
+    sel.appendChild(opt);
+  });
+}
+
+/* ============================================================
+   EVENT LISTENERS
+   ============================================================ */
+document.getElementById('subjectFilter').addEventListener('change', render);
+document.getElementById('dayFilter').addEventListener('change', render);
+document.getElementById('searchBox').addEventListener('input', render);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+populateDays();
+render();
+</script>
+
+</body>
+</html>
