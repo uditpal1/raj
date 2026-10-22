@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paper Folding Reasoning Quiz</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+  background: #f1f5f9;
+  color: #172033;
+  padding: 14px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+.header {
+  background: linear-gradient(135deg, #172554, #1d4ed8);
+  color: white;
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  font-size: 14px;
+  color: #dbeafe;
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 16px #0000000a;
+}
+
+.badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+
+.question-text {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.image-box {
+  width: 100%;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px;
+  background: white;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.question-image {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  margin: auto;
+}
+
+.section-title {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.option {
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  background: white;
+  transition: 0.2s;
+}
+
+.option.selected {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.option.correct {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+.option.wrong {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.option-label input {
+  width: 17px;
+  height: 17px;
+  accent-color: #2563eb;
+}
+
+.option img {
+  display: block;
+  width: 100%;
+  height: 145px;
+  object-fit: contain;
+  border-radius: 7px;
+  background: white;
+}
+
+.image-error {
+  color: #dc2626;
+  font-size: 12px;
+  padding: 12px 0;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.check-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.reset-btn {
+  background: #e2e8f0;
+  color: #172033;
+}
+
+.result {
+  display: none;
+  margin-top: 16px;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.explanation {
+  display: none;
+  margin-top: 12px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 12px;
+  padding: 14px;
+}
+
+@media (max-width: 380px) {
+  body {
+    padding: 8px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .option img {
+    height: 115px;
+  }
+
+  .question-text {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <header class="header">
+    <h1>Reasoning Practice</h1>
+    <p>Paper Folding & Punching Quiz</p>
+  </header>
+
+  <main class="card">
+
+    <div class="badge">QUESTION 03</div>
+
+    <div class="question-text" id="questionText"></div>
+
+    <div class="image-box">
+      <img
+        id="questionImage"
+        class="question-image"
+        alt="Paper folding question"
+      >
+      <div id="questionImageError" class="image-error"
+           style="display:none;">
+        Question image load nahi hui. Internet aur image URL check karein.
+      </div>
+    </div>
+
+    <h2 class="section-title">सही विकल्प चुनें:</h2>
+
+    <div class="options" id="options"></div>
+
+    <div class="buttons">
+      <button class="check-btn" id="checkBtn">
+        Answer Check
+      </button>
+
+      <button class="reset-btn" id="resetBtn">
+        Reset
+      </button>
+    </div>
+
+    <div class="result" id="result" role="status"></div>
+
+    <div class="explanation" id="explanation"></div>
+
+  </main>
+
+  <footer class="footer">
+    Paper Folding Reasoning · Practice Preview
+  </footer>
+
+</div>
+
+<script>
+const question = {
+  id: "q1",
+
+  question_text:
+    "Q.3 एक कागज को नीचे दर्शाए गए अनुसार मोड़कर पंच किया जाता है। खोलने पर यह कैसा दिखाई देगा?",
+
+  // Original question image
+  image_url: "https://iili.io/nOD9pnf.md.png",
+
+  // Options in the order provided
+  options: [
+    "https://iili.io/nODHdaS.png",
+    "https://iili.io/nOD9yG4.png",
+    "https://iili.io/nODH96l.png",
+    "https://iili.io/nODHqZb.png"
+  ],
+
+  // 0 = Option 1, 1 = Option 2,
+  // 2 = Option 3, 3 = Option 4
+  // Original JSON ke hisaab se Option 3
+  correct_option_index: 2,
+
+  e: "कागज को खोलते समय पंच के निशानों का प्रतिबिंब सभी मोड़ों पर बनता है। सभी तहों को उलटे क्रम में खोलकर विकल्पों की आकृति से मिलान करें।"
+};
+
+let selectedOption = null;
+let checked = false;
+
+const questionText = document.getElementById("questionText");
+const questionImage = document.getElementById("questionImage");
+const optionsContainer = document.getElementById("options");
+const result = document.getElementById("result");
+const explanation = document.getElementById("explanation");
+
+questionText.textContent = question.question_text;
+questionImage.src = question.image_url;
+
+questionImage.onerror = function () {
+  document.getElementById("questionImageError").style.display = "block";
+};
+
+// Render all four options
+question.options.forEach((url, index) => {
+  const option = document.createElement("div");
+  option.className = "option";
+
+  const label = document.createElement("label");
+  label.className = "option-label";
+
+  const radio = document.createElement("input");
+  radio.type = "radio";
+  radio.name = "answer";
+  radio.value = index;
+
+  const labelText = document.createElement("span");
+  labelText.textContent =
+    "Option " + (index + 1);
+
+  label.appendChild(radio);
+  label.appendChild(labelText);
+
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "Option " + (index + 1);
+  img.loading = "lazy";
+
+  img.onerror = function () {
+    this.style.display = "none";
+
+    const error = document.createElement("div");
+    error.className = "image-error";
+    error.textContent = "Image load nahi hui";
+    option.appendChild(error);
+  };
+
+  option.appendChild(label);
+  option.appendChild(img);
+
+  option.addEventListener("click", function () {
+    if (checked) return;
+
+    selectedOption = index;
+
+    document.querySelectorAll(".option").forEach(el => {
+      el.classList.remove("selected");
+    });
+
+    option.classList.add("selected");
+    radio.checked = true;
+  });
+
+  optionsContainer.appendChild(option);
+});
+
+// Check selected answer
+function checkAnswer() {
+  if (selectedOption === null) {
+    result.style.display = "block";
+    result.style.background = "#fef3c7";
+    result.style.color = "#92400e";
+    result.textContent = "पहले कोई एक विकल्प चुनें।";
+    explanation.style.display = "none";
+    return;
+  }
+
+  checked = true;
+
+  const isCorrect =
+    selectedOption === question.correct_option_index;
+
+  result.style.display = "block";
+  result.style.background =
+    isCorrect ? "#dcfce7" : "#fee2e2";
+
+  result.style.color =
+    isCorrect ? "#166534" : "#991b1b";
+
+  result.textContent = isCorrect
+    ? "सही जवाब! बहुत बढ़िया।"
+    : "गलत जवाब। दिए गए answer key के अनुसार सही उत्तर Option " +
+      (question.correct_option_index + 1) + " है।";
+
+  document.querySelectorAll(".option").forEach((el, index) => {
+    el.classList.remove("correct", "wrong");
+
+    if (index === question.correct_option_index) {
+      el.classList.add("correct");
+    }
+
+    if (index === selectedOption && !isCorrect) {
+      el.classList.add("wrong");
+    }
+  });
+
+  explanation.style.display = "block";
+  explanation.textContent =
+    "Explanation: " + question.e;
+}
+
+// Reset the question
+function resetAnswer() {
+  selectedOption = null;
+  checked = false;
+
+  document.querySelectorAll(".option").forEach(el => {
+    el.classList.remove("selected", "correct", "wrong");
+    el.querySelector("input").checked = false;
+  });
+
+  result.style.display = "none";
+  explanation.style.display = "none";
+  result.textContent = "";
+  explanation.textContent = "";
+}
+
+document.getElementById("checkBtn")
+  .addEventListener("click", checkAnswer);
+
+document.getElementById("resetBtn")
+  .addEventListener("click", resetAnswer);
+</script>
+
+</body>
+</html>
