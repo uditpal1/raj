@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajasthan Jobs Question Bank</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif;
+    background: linear-gradient(180deg, #fdf6f0 0%, #f4e8e0 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #2b1a12;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #c1440e 0%, #d97706 100%);
+    border-radius: 14px;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(193,68,14,0.25);
+  }
+  .header h1 { font-size: 26px; margin-bottom: 6px; }
+  .header p { font-size: 13px; opacity: 0.92; }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  }
+  select, input[type="text"], button {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #e0d5cc;
+    font-size: 14px;
+    background: #fff;
+    color: #2b1a12;
+    font-family: inherit;
+  }
+  input[type="text"] { min-width: 200px; flex: 1; max-width: 320px; }
+  select:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: #c1440e;
+    box-shadow: 0 0 0 3px rgba(193,68,14,0.12);
+  }
+  button { cursor: pointer; font-weight: 600; transition: all 0.15s; }
+  button.primary {
+    background: #c1440e;
+    color: #fff;
+    border: none;
+  }
+  button.primary:hover { background: #a33609; }
+  button.secondary {
+    background: #fff;
+    color: #c1440e;
+    border: 1.5px solid #c1440e;
+  }
+  button.secondary:hover { background: #fdf0e8; }
+
+  .stats {
+    text-align: center;
+    color: #7a5c4a;
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .question-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border-left: 5px solid #c1440e;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .question-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  }
+  .q-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .q-tag {
+    background: #2b1a12;
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  .subject-tag {
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 12px 14px;
+    border: 1.5px solid #e8ddd5;
+    border-radius: 8px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    resize: vertical;
+    background: #fdfaf7;
+    color: #2b1a12;
+  }
+  textarea:focus { outline: none; border-color: #c1440e; }
+  .copy-btn {
+    margin-top: 10px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .copy-btn:hover { background: #15803d; }
+  .copy-btn.copied { background: #6b7280; }
+
+  .empty-msg {
+    text-align: center;
+    color: #a08c7d;
+    padding: 40px;
+    font-size: 15px;
+  }
+
+  .footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    color: #a08c7d;
+    font-size: 12px;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 20px; }
+    .controls { flex-direction: column; }
+    select, input[type="text"], button { width: 100%; }
+    input[type="text"] { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏛️ Rajasthan Jobs Question Bank</h1>
+  <p>Rajasthan GK • Current Affairs • India GK • Reasoning • Maths • Hindi</p>
+</div>
+
+<div class="controls">
+  <select id="subjectFilter">
+    <option value="all">All Subjects</option>
+    <option value="rajasthan_gk">Rajasthan GK</option>
+    <option value="current_affairs">Current Affairs</option>
+    <option value="india_gk">India GK</option>
+    <option value="reasoning">Reasoning</option>
+    <option value="maths">Maths</option>
+    <option value="hindi">Hindi</option>
+  </select>
+  <select id="dayFilter">
+    <option value="all">All Days</option>
+  </select>
+  <input type="text" id="searchBox" placeholder="🔍 Search question...">
+  <button class="primary" onclick="copyAll()">📋 Copy All Visible</button>
+  <button class="secondary" onclick="downloadJSON()">💾 Download JSON</button>
+</div>
+
+<div class="stats" id="stats"></div>
+<div id="questionsContainer"></div>
+
+<div class="footer">
+  Rajasthan Jobs Question Bank • Bilingual (Hindi + English) • Copy-ready format
+</div>
+
+<script>
+/* ============================================================
+   QUESTION DATA
+   ------------------------------------------------------------
+   Format:
+   {
+     day: 1,
+     subject: "rajasthan_gk" | "current_affairs" | "india_gk" |
+              "reasoning" | "maths" | "hindi",
+     qno: 1,
+     hindi: "प्रश्न हिंदी में",
+     english: "Question in English",
+     options: [
+       { hi: "विकल्प", en: "Option", correct: true/false },
+       ...
+     ]
+   }
+   ============================================================ */
+
+const questions = [
+
+  /* ============================================================
+     DAY 1 - RAJASTHAN GK
+     ============================================================ */
+  { "day":1, "subject":"rajasthan_gk", "qno":1, "hindi":"कालीबंगा सभ्यता राजस्थान के किस जिले में स्थित है?", "english":"In which district of Rajasthan is the Kalibangan civilization located?", "options":[{"hi":"हनुमानगढ़","en":"Hanumangarh","correct":true},{"hi":"जयपुर","en":"Jaipur","correct":false},{"hi":"उदयपुर","en":"Udaipur","correct":false},{"hi":"कोटा","en":"Kota","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":2, "hindi":"आहड़ सभ्यता का प्रमुख केंद्र किस वर्तमान शहर के निकट था?", "english":"Near which present-day city was the main center of the Ahar civilization located?", "options":[{"hi":"बीकानेर","en":"Bikaner","correct":false},{"hi":"उदयपुर","en":"Udaipur","correct":true},{"hi":"अजमेर","en":"Ajmer","correct":false},{"hi":"जैसलमेर","en":"Jaisalmer","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":3, "hindi":"चित्तौड़गढ़ दुर्ग का विजय स्तंभ किस शासक ने बनवाया था?", "english":"Which ruler commissioned the Vijay Stambh at Chittorgarh Fort?", "options":[{"hi":"महाराणा प्रताप","en":"Maharana Pratap","correct":false},{"hi":"राणा सांगा","en":"Rana Sanga","correct":false},{"hi":"राणा कुम्भा","en":"Rana Kumbha","correct":true},{"hi":"महाराणा राज सिंह","en":"Maharana Raj Singh","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":4, "hindi":"हल्दीघाटी का युद्ध किस वर्ष हुआ था?", "english":"In which year was the Battle of Haldighati fought?", "options":[{"hi":"1527","en":"1527","correct":false},{"hi":"1568","en":"1568","correct":false},{"hi":"1576","en":"1576","correct":true},{"hi":"1582","en":"1582","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":5, "hindi":"बिजौलिया किसान आंदोलन से प्रमुख रूप से कौन जुड़े थे?", "english":"Who was prominently associated with the Bijolia peasant movement?", "options":[{"hi":"विजय सिंह पथिक","en":"Vijay Singh Pathik","correct":true},{"hi":"गोविंद गुरु","en":"Govind Guru","correct":false},{"hi":"केसरी सिंह बारहठ","en":"Kesari Singh Barhath","correct":false},{"hi":"जयनारायण व्यास","en":"Jai Narayan Vyas","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":6, "hindi":"मानगढ़ आंदोलन से संबंधित प्रमुख जनजातीय नेता कौन थे?", "english":"Which prominent tribal leader was associated with the Mangarh movement?", "options":[{"hi":"मोतीलाल तेजावत","en":"Motilal Tejawat","correct":false},{"hi":"गोविंद गुरु","en":"Govind Guru","correct":true},{"hi":"अर्जुनलाल सेठी","en":"Arjun Lal Sethi","correct":false},{"hi":"गोकुलभाई भट्ट","en":"Gokulbhai Bhatt","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":7, "hindi":"राजस्थान का एकीकरण कितने चरणों में पूरा हुआ था?", "english":"In how many stages was the integration of Rajasthan completed?", "options":[{"hi":"5","en":"5","correct":false},{"hi":"6","en":"6","correct":false},{"hi":"7","en":"7","correct":true},{"hi":"8","en":"8","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":8, "hindi":"राजस्थान का प्रसिद्ध घूमर नृत्य मुख्यतः किस प्रकार का नृत्य है?", "english":"What type of dance is Rajasthan's famous Ghoomar dance primarily?", "options":[{"hi":"लोक नृत्य","en":"Folk dance","correct":true},{"hi":"शास्त्रीय नृत्य","en":"Classical dance","correct":false},{"hi":"युद्ध नृत्य","en":"War dance","correct":false},{"hi":"कठपुतली नृत्य","en":"Puppet dance","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":9, "hindi":"राजस्थान में पुष्कर मेला किस जिले में आयोजित होता है?", "english":"In which district of Rajasthan is the Pushkar Fair held?", "options":[{"hi":"अजमेर","en":"Ajmer","correct":true},{"hi":"पाली","en":"Pali","correct":false},{"hi":"बाड़मेर","en":"Barmer","correct":false},{"hi":"झालावाड़","en":"Jhalawar","correct":false}] },
+  { "day":1, "subject":"rajasthan_gk", "qno":10, "hindi":"राजस्थान की सबसे बड़ी खारे पानी की अंतर्देशीय झील कौन-सी है?", "english":"Which is the largest inland saltwater lake in Rajasthan?", "options":[{"hi":"पिछोला झील","en":"Lake Pichola","correct":false},{"hi":"जयसमंद झील","en":"Jaisamand Lake","correct":false},{"hi":"सांभर झील","en":"Sambhar Lake","correct":true},{"hi":"फतेहसागर झील","en":"Fateh Sagar Lake","correct":false}] },
+
+  /* ============================================================
+     DAY 1 - CURRENT AFFAIRS
+     ============================================================ */
+  { "day":1, "subject":"current_affairs", "qno":1, "hindi":"ISRO के SPADEX मिशन ने किस महत्वपूर्ण तकनीक का सफल प्रदर्शन किया?", "english":"Which important technology did ISRO's SPADEX mission successfully demonstrate?", "options":[{"hi":"अंतरिक्ष में उपग्रह डॉकिंग","en":"Satellite docking in space","correct":true},{"hi":"मानव को मंगल पर उतारना","en":"Landing humans on Mars","correct":false},{"hi":"चंद्रमा से नमूने पृथ्वी पर लाना","en":"Returning samples from the Moon to Earth","correct":false},{"hi":"सौर मंडल से बाहर यात्रा","en":"Travel beyond the Solar System","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":2, "hindi":"SPADEX की सफलता के बाद भारत अंतरिक्ष में डॉकिंग प्रदर्शित करने वाला विश्व का कौन-सा देश बना?", "english":"After SPADEX's success, which country did India become to demonstrate docking in space?", "options":[{"hi":"दूसरा","en":"Second","correct":false},{"hi":"तीसरा","en":"Third","correct":false},{"hi":"चौथा","en":"Fourth","correct":true},{"hi":"पाँचवाँ","en":"Fifth","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":3, "hindi":"भारत का केंद्रीय बजट 2025-26 किसने प्रस्तुत किया?", "english":"Who presented India's Union Budget for 2025–26?", "options":[{"hi":"निर्मला सीतारमण","en":"Nirmala Sitharaman","correct":true},{"hi":"पीयूष गोयल","en":"Piyush Goyal","correct":false},{"hi":"अमित शाह","en":"Amit Shah","correct":false},{"hi":"राजनाथ सिंह","en":"Rajnath Singh","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":4, "hindi":"76वें गणतंत्र दिवस 2025 के मुख्य अतिथि कौन थे?", "english":"Who was the chief guest at India's 76th Republic Day celebrations in 2025?", "options":[{"hi":"प्रबोवो सुबियांतो","en":"Prabowo Subianto","correct":true},{"hi":"इमैनुएल मैक्रों","en":"Emmanuel Macron","correct":false},{"hi":"जो बाइडेन","en":"Joe Biden","correct":false},{"hi":"ऋषि सुनक","en":"Rishi Sunak","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":5, "hindi":"महाकुंभ 2025 का आयोजन किस शहर में हुआ?", "english":"In which city was the Maha Kumbh held in 2025?", "options":[{"hi":"हरिद्वार","en":"Haridwar","correct":false},{"hi":"प्रयागराज","en":"Prayagraj","correct":true},{"hi":"नासिक","en":"Nashik","correct":false},{"hi":"उज्जैन","en":"Ujjain","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":6, "hindi":"ISRO ने SPADEX उपग्रहों की सफल डॉकिंग जनवरी 2025 में किस तारीख को की?", "english":"On which date in January 2025 did ISRO successfully dock the SPADEX satellites?", "options":[{"hi":"9 जनवरी","en":"9 January","correct":false},{"hi":"12 जनवरी","en":"12 January","correct":false},{"hi":"16 जनवरी","en":"16 January","correct":true},{"hi":"26 जनवरी","en":"26 January","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":7, "hindi":"2025 में दिल्ली विधानसभा चुनाव के बाद मुख्यमंत्री कौन बनीं?", "english":"Who became Chief Minister after the 2025 Delhi Assembly election?", "options":[{"hi":"आतिशी","en":"Atishi","correct":false},{"hi":"रेखा गुप्ता","en":"Rekha Gupta","correct":true},{"hi":"स्मृति ईरानी","en":"Smriti Irani","correct":false},{"hi":"बांसुरी स्वराज","en":"Bansuri Swaraj","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":8, "hindi":"2025 में G20 की अध्यक्षता किस देश के पास थी?", "english":"Which country held the G20 presidency in 2025?", "options":[{"hi":"भारत","en":"India","correct":false},{"hi":"ब्राजील","en":"Brazil","correct":false},{"hi":"दक्षिण अफ्रीका","en":"South Africa","correct":true},{"hi":"इंडोनेशिया","en":"Indonesia","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":9, "hindi":"अंतरराष्ट्रीय योग दिवस 2025 की थीम क्या थी?", "english":"What was the theme of International Yoga Day 2025?", "options":[{"hi":"योग फॉर वन अर्थ, वन हेल्थ","en":"Yoga for One Earth, One Health","correct":true},{"hi":"योग फॉर ह्यूमैनिटी","en":"Yoga for Humanity","correct":false},{"hi":"योग फॉर सेल्फ एंड सोसाइटी","en":"Yoga for Self and Society","correct":false},{"hi":"योग एट होम","en":"Yoga at Home","correct":false}] },
+  { "day":1, "subject":"current_affairs", "qno":10, "hindi":"2025 में अंतरराष्ट्रीय महिला दिवस किस तारीख को मनाया गया?", "english":"On which date was International Women's Day observed in 2025?", "options":[{"hi":"6 मार्च","en":"6 March","correct":false},{"hi":"8 मार्च","en":"8 March","correct":true},{"hi":"10 मार्च","en":"10 March","correct":false},{"hi":"15 मार्च","en":"15 March","correct":false}] },
+
+  /* ============================================================
+     DAY 1 - INDIA GK
+     ============================================================ */
+  { "day":1, "subject":"india_gk", "qno":1, "hindi":"भारतीय संविधान कब लागू हुआ?", "english":"When did the Constitution of India come into effect?", "options":[{"hi":"15 अगस्त 1947","en":"15 August 1947","correct":false},{"hi":"26 जनवरी 1950","en":"26 January 1950","correct":true},{"hi":"26 नवंबर 1949","en":"26 November 1949","correct":false},{"hi":"2 अक्टूबर 1950","en":"2 October 1950","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":2, "hindi":"भारतीय संविधान में मौलिक अधिकार किस भाग में दिए गए हैं?", "english":"In which Part of the Indian Constitution are Fundamental Rights provided?", "options":[{"hi":"भाग II","en":"Part II","correct":false},{"hi":"भाग III","en":"Part III","correct":true},{"hi":"भाग IV","en":"Part IV","correct":false},{"hi":"भाग V","en":"Part V","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":3, "hindi":"भारत की सबसे लंबी नदी कौन-सी है जो पूरी तरह भारत में बहती है?", "english":"Which is the longest river that flows entirely within India?", "options":[{"hi":"गंगा","en":"Ganga","correct":false},{"hi":"गोदावरी","en":"Godavari","correct":true},{"hi":"ब्रह्मपुत्र","en":"Brahmaputra","correct":false},{"hi":"सिंधु","en":"Indus","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":4, "hindi":"भारत का सबसे बड़ा पठार कौन-सा है?", "english":"Which is the largest plateau in India?", "options":[{"hi":"मालवा का पठार","en":"Malwa Plateau","correct":false},{"hi":"छोटानागपुर का पठार","en":"Chota Nagpur Plateau","correct":false},{"hi":"दक्कन का पठार","en":"Deccan Plateau","correct":true},{"hi":"मेघालय का पठार","en":"Meghalaya Plateau","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":5, "hindi":"भारत में हरित क्रांति का मुख्य संबंध किससे है?", "english":"The Green Revolution in India was primarily associated with which sector?", "options":[{"hi":"दुग्ध उत्पादन","en":"Milk production","correct":false},{"hi":"खाद्यान्न उत्पादन","en":"Food grain production","correct":true},{"hi":"मत्स्य उत्पादन","en":"Fish production","correct":false},{"hi":"रेशम उत्पादन","en":"Silk production","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":6, "hindi":"भारत का सर्वोच्च न्यायालय कहाँ स्थित है?", "english":"Where is the Supreme Court of India located?", "options":[{"hi":"मुंबई","en":"Mumbai","correct":false},{"hi":"नई दिल्ली","en":"New Delhi","correct":true},{"hi":"कोलकाता","en":"Kolkata","correct":false},{"hi":"प्रयागराज","en":"Prayagraj","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":7, "hindi":"काजीरंगा राष्ट्रीय उद्यान किस राज्य में स्थित है?", "english":"In which state is Kaziranga National Park located?", "options":[{"hi":"असम","en":"Assam","correct":true},{"hi":"गुजरात","en":"Gujarat","correct":false},{"hi":"केरल","en":"Kerala","correct":false},{"hi":"ओडिशा","en":"Odisha","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":8, "hindi":"भारतीय रिजर्व बैंक की स्थापना किस वर्ष हुई थी?", "english":"In which year was the Reserve Bank of India established?", "options":[{"hi":"1935","en":"1935","correct":true},{"hi":"1947","en":"1947","correct":false},{"hi":"1950","en":"1950","correct":false},{"hi":"1921","en":"1921","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":9, "hindi":"भारत के प्रथम राष्ट्रपति कौन थे?", "english":"Who was the first President of India?", "options":[{"hi":"डॉ. सर्वपल्ली राधाकृष्णन","en":"Dr. Sarvepalli Radhakrishnan","correct":false},{"hi":"डॉ. राजेंद्र प्रसाद","en":"Dr. Rajendra Prasad","correct":true},{"hi":"जवाहरलाल नेहरू","en":"Jawaharlal Nehru","correct":false},{"hi":"डॉ. जाकिर हुसैन","en":"Dr. Zakir Husain","correct":false}] },
+  { "day":1, "subject":"india_gk", "qno":10, "hindi":"भारत का राष्ट्रीय जलीय जीव कौन-सा है?", "english":"What is the national aquatic animal of India?", "options":[{"hi":"नीली व्हेल","en":"Blue whale","correct":false},{"hi":"गंगा नदी डॉल्फिन","en":"Ganges river dolphin","correct":true},{"hi":"मगरमच्छ","en":"Crocodile","correct":false},{"hi":"ऑलिव रिडले कछुआ","en":"Olive ridley turtle","correct":false}] },
+
+  /* ============================================================
+     DAY 1 - REASONING
+     ============================================================ */
+  { "day":1, "subject":"reasoning", "qno":1, "hindi":"श्रृंखला पूरी करें: 2, 6, 12, 20, 30, ?", "english":"Complete the series: 2, 6, 12, 20, 30, ?", "options":[{"hi":"36","en":"36","correct":false},{"hi":"40","en":"40","correct":false},{"hi":"42","en":"42","correct":true},{"hi":"44","en":"44","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":2, "hindi":"यदि CAT को DBU लिखा जाता है, तो DOG को कैसे लिखा जाएगा?", "english":"If CAT is written as DBU, how will DOG be written?", "options":[{"hi":"EPH","en":"EPH","correct":true},{"hi":"EOG","en":"EOG","correct":false},{"hi":"DPH","en":"DPH","correct":false},{"hi":"FPI","en":"FPI","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":3, "hindi":"रवि, सीता का भाई है। सीता, मोहन की माँ है। रवि का मोहन से क्या संबंध है?", "english":"Ravi is Sita's brother. Sita is Mohan's mother. How is Ravi related to Mohan?", "options":[{"hi":"पिता","en":"Father","correct":false},{"hi":"मामा","en":"Maternal uncle","correct":true},{"hi":"भाई","en":"Brother","correct":false},{"hi":"दादा","en":"Grandfather","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":4, "hindi":"एक व्यक्ति उत्तर की ओर 5 मीटर चलता है, फिर दाएँ मुड़कर 3 मीटर चलता है। अब वह किस दिशा की ओर है?", "english":"A person walks 5 metres north, then turns right and walks 3 metres. Which direction is the person facing now?", "options":[{"hi":"उत्तर","en":"North","correct":false},{"hi":"दक्षिण","en":"South","correct":false},{"hi":"पूर्व","en":"East","correct":true},{"hi":"पश्चिम","en":"West","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":5, "hindi":"अक्षर श्रृंखला पूरी करें: A, C, F, J, O, ?", "english":"Complete the letter series: A, C, F, J, O, ?", "options":[{"hi":"T","en":"T","correct":false},{"hi":"U","en":"U","correct":true},{"hi":"V","en":"V","correct":false},{"hi":"W","en":"W","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":6, "hindi":"यदि आज सोमवार है, तो 10 दिन बाद कौन-सा दिन होगा?", "english":"If today is Monday, which day will it be after 10 days?", "options":[{"hi":"बुधवार","en":"Wednesday","correct":false},{"hi":"गुरुवार","en":"Thursday","correct":true},{"hi":"शुक्रवार","en":"Friday","correct":false},{"hi":"शनिवार","en":"Saturday","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":7, "hindi":"घड़ी में ठीक 3 बजे घंटे और मिनट की सुई के बीच कितना कोण होता है?", "english":"What is the angle between the hour and minute hands at exactly 3 o'clock?", "options":[{"hi":"60°","en":"60°","correct":false},{"hi":"90°","en":"90°","correct":true},{"hi":"120°","en":"120°","correct":false},{"hi":"180°","en":"180°","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":8, "hindi":"इनमें से कौन-सी संख्या अन्य से भिन्न है: 9, 16, 25, 36, 48?", "english":"Which number is different from the others: 9, 16, 25, 36, 48?", "options":[{"hi":"16","en":"16","correct":false},{"hi":"25","en":"25","correct":false},{"hi":"36","en":"36","correct":false},{"hi":"48","en":"48","correct":true}] },
+  { "day":1, "subject":"reasoning", "qno":9, "hindi":"यदि सभी गुलाब फूल हैं और कुछ फूल लाल हैं, तो कौन-सा निष्कर्ष निश्चित रूप से सही है?", "english":"If all roses are flowers and some flowers are red, which conclusion is definitely true?", "options":[{"hi":"सभी फूल गुलाब हैं","en":"All flowers are roses","correct":false},{"hi":"सभी गुलाब लाल हैं","en":"All roses are red","correct":false},{"hi":"सभी गुलाब फूल हैं","en":"All roses are flowers","correct":true},{"hi":"कोई फूल लाल नहीं है","en":"No flower is red","correct":false}] },
+  { "day":1, "subject":"reasoning", "qno":10, "hindi":"A, B से लंबा है और B, C से लंबा है। सबसे छोटा कौन है?", "english":"A is taller than B, and B is taller than C. Who is the shortest?", "options":[{"hi":"A","en":"A","correct":false},{"hi":"B","en":"B","correct":false},{"hi":"C","en":"C","correct":true},{"hi":"निर्धारित नहीं किया जा सकता","en":"Cannot be determined","correct":false}] },
+
+  /* ============================================================
+     DAY 1 - MATHS
+     ============================================================ */
+  { "day":1, "subject":"maths", "qno":1, "hindi":"24 और 36 का महत्तम समापवर्तक (HCF) कितना है?", "english":"What is the highest common factor (HCF) of 24 and 36?", "options":[{"hi":"6","en":"6","correct":false},{"hi":"12","en":"12","correct":true},{"hi":"18","en":"18","correct":false},{"hi":"24","en":"24","correct":false}] },
+  { "day":1, "subject":"maths", "qno":2, "hindi":"12 और 15 का लघुत्तम समापवर्त्य (LCM) कितना है?", "english":"What is the least common multiple (LCM) of 12 and 15?", "options":[{"hi":"30","en":"30","correct":false},{"hi":"45","en":"45","correct":false},{"hi":"60","en":"60","correct":true},{"hi":"90","en":"90","correct":false}] },
+  { "day":1, "subject":"maths", "qno":3, "hindi":"एक वस्तु का क्रय मूल्य ₹800 और विक्रय मूल्य ₹920 है। लाभ प्रतिशत कितना है?", "english":"An item costs ₹800 and is sold for ₹920. What is the profit percentage?", "options":[{"hi":"10%","en":"10%","correct":false},{"hi":"12%","en":"12%","correct":false},{"hi":"15%","en":"15%","correct":true},{"hi":"20%","en":"20%","correct":false}] },
+  { "day":1, "subject":"maths", "qno":4, "hindi":"₹2,000 पर 5% वार्षिक दर से 3 वर्षों का साधारण ब्याज कितना होगा?", "english":"What is the simple interest on ₹2,000 for 3 years at 5% per annum?", "options":[{"hi":"₹250","en":"₹250","correct":false},{"hi":"₹300","en":"₹300","correct":true},{"hi":"₹350","en":"₹350","correct":false},{"hi":"₹400","en":"₹400","correct":false}] },
+  { "day":1, "subject":"maths", "qno":5, "hindi":"40 का 25% कितना है?", "english":"What is 25% of 40?", "options":[{"hi":"5","en":"5","correct":false},{"hi":"10","en":"10","correct":true},{"hi":"15","en":"15","correct":false},{"hi":"20","en":"20","correct":false}] },
+  { "day":1, "subject":"maths", "qno":6, "hindi":"पाँच संख्याओं का औसत 18 है। उनका कुल योग कितना है?", "english":"The average of five numbers is 18. What is their total sum?", "options":[{"hi":"80","en":"80","correct":false},{"hi":"85","en":"85","correct":false},{"hi":"90","en":"90","correct":true},{"hi":"95","en":"95","correct":false}] },
+  { "day":1, "subject":"maths", "qno":7, "hindi":"एक वाहन 3 घंटे में 150 किलोमीटर चलता है। उसकी औसत गति कितनी है?", "english":"A vehicle travels 150 kilometres in 3 hours. What is its average speed?", "options":[{"hi":"40 किमी/घंटा","en":"40 km/h","correct":false},{"hi":"50 किमी/घंटा","en":"50 km/h","correct":true},{"hi":"60 किमी/घंटा","en":"60 km/h","correct":false},{"hi":"75 किमी/घंटा","en":"75 km/h","correct":false}] },
+  { "day":1, "subject":"maths", "qno":8, "hindi":"एक आयत की लंबाई 12 सेमी और चौड़ाई 5 सेमी है। उसका क्षेत्रफल कितना है?", "english":"A rectangle is 12 cm long and 5 cm wide. What is its area?", "options":[{"hi":"17 वर्ग सेमी","en":"17 square cm","correct":false},{"hi":"34 वर्ग सेमी","en":"34 square cm","correct":false},{"hi":"60 वर्ग सेमी","en":"60 square cm","correct":true},{"hi":"120 वर्ग सेमी","en":"120 square cm","correct":false}] },
+  { "day":1, "subject":"maths", "qno":9, "hindi":"दो संख्याओं का अनुपात 3:5 है और उनका योग 64 है। छोटी संख्या क्या है?", "english":"The ratio of two numbers is 3:5 and their sum is 64. What is the smaller number?", "options":[{"hi":"24","en":"24","correct":true},{"hi":"30","en":"30","correct":false},{"hi":"32","en":"32","correct":false},{"hi":"40","en":"40","correct":false}] },
+  { "day":1, "subject":"maths", "qno":10, "hindi":"एक घन की भुजा 4 सेमी है। उसका आयतन कितना है?", "english":"A cube has an edge of 4 cm. What is its volume?", "options":[{"hi":"16 घन सेमी","en":"16 cubic cm","correct":false},{"hi":"32 घन सेमी","en":"32 cubic cm","correct":false},{"hi":"48 घन सेमी","en":"48 cubic cm","correct":false},{"hi":"64 घन सेमी","en":"64 cubic cm","correct":true}] },
+
+  /* ============================================================
+     DAY 1 - HINDI
+     ============================================================ */
+  { "day":1, "subject":"hindi", "qno":1, "hindi":"'विद्यालय' शब्द में कौन-सी संधि है?", "english":"Which type of sandhi occurs in the Hindi word 'विद्यालय'?", "options":[{"hi":"दीर्घ संधि","en":"Dirgha sandhi","correct":true},{"hi":"गुण संधि","en":"Guna sandhi","correct":false},{"hi":"वृद्धि संधि","en":"Vriddhi sandhi","correct":false},{"hi":"यण संधि","en":"Yan sandhi","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":2, "hindi":"'राजपुत्र' में कौन-सा समास है?", "english":"Which type of compound is found in 'राजपुत्र'?", "options":[{"hi":"द्वंद्व समास","en":"Dvandva compound","correct":false},{"hi":"षष्ठी तत्पुरुष समास","en":"Shashthi Tatpurush compound","correct":true},{"hi":"बहुव्रीहि समास","en":"Bahuvrihi compound","correct":false},{"hi":"अव्ययीभाव समास","en":"Avyayibhava compound","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":3, "hindi":"'सूर्य' का पर्यायवाची शब्द कौन-सा है?", "english":"Which of the following is a synonym of 'Surya' (the Sun)?", "options":[{"hi":"निशाकर","en":"Nishakar","correct":false},{"hi":"दिवाकर","en":"Divakar","correct":true},{"hi":"रजनी","en":"Rajani","correct":false},{"hi":"पंकज","en":"Pankaj","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":4, "hindi":"'उन्नति' का विलोम शब्द क्या है?", "english":"What is the antonym of 'Unnati' (progress)?", "options":[{"hi":"प्रगति","en":"Progress","correct":false},{"hi":"विकास","en":"Development","correct":false},{"hi":"अवनति","en":"Decline","correct":true},{"hi":"समृद्धि","en":"Prosperity","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":5, "hindi":"'नाक कटना' मुहावरे का सही अर्थ क्या है?", "english":"What is the correct meaning of the Hindi idiom 'नाक कटना'?", "options":[{"hi":"सम्मान बढ़ना","en":"To gain respect","correct":false},{"hi":"अपमान होना","en":"To be disgraced","correct":true},{"hi":"बीमार होना","en":"To fall ill","correct":false},{"hi":"क्रोधित होना","en":"To become angry","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":6, "hindi":"'जो कभी न मरे' के लिए एक शब्द क्या है?", "english":"What is the one-word expression for 'one who never dies'?", "options":[{"hi":"अजर","en":"Ageless","correct":false},{"hi":"अमर","en":"Immortal","correct":true},{"hi":"अज्ञानी","en":"Ignorant","correct":false},{"hi":"अटल","en":"Unwavering","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":7, "hindi":"'राम ने फल खाया' वाक्य में क्रिया कौन-सी है?", "english":"Which word is the verb in the sentence 'Ram ate the fruit'?", "options":[{"hi":"राम","en":"Ram","correct":false},{"hi":"ने","en":"By","correct":false},{"hi":"फल","en":"Fruit","correct":false},{"hi":"खाया","en":"Ate","correct":true}] },
+  { "day":1, "subject":"hindi", "qno":8, "hindi":"'सुंदर' शब्द किस शब्द-भेद का उदाहरण है?", "english":"Which part of speech does the word 'सुंदर' (beautiful) represent?", "options":[{"hi":"संज्ञा","en":"Noun","correct":false},{"hi":"सर्वनाम","en":"Pronoun","correct":false},{"hi":"विशेषण","en":"Adjective","correct":true},{"hi":"क्रिया","en":"Verb","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":9, "hindi":"शुद्ध वर्तनी वाला शब्द चुनिए।", "english":"Choose the word with the correct spelling.", "options":[{"hi":"आर्शीवाद","en":"Incorrect spelling of Aashirvaad","correct":false},{"hi":"आशीर्वाद","en":"Aashirvaad","correct":true},{"hi":"आर्शिवाद","en":"Incorrect spelling of Aashirvaad","correct":false},{"hi":"आशिर्वाद","en":"Incorrect spelling of Aashirvaad","correct":false}] },
+  { "day":1, "subject":"hindi", "qno":10, "hindi":"'आँखों का तारा' मुहावरे का अर्थ क्या है?", "english":"What is the meaning of the Hindi idiom 'आँखों का तारा'?", "options":[{"hi":"बहुत प्रिय व्यक्ति","en":"A very dear person","correct":true},{"hi":"बहुत क्रोधित व्यक्ति","en":"A very angry person","correct":false},{"hi":"बहुत आलसी व्यक्ति","en":"A very lazy person","correct":false},{"hi":"बहुत चालाक व्यक्ति","en":"A very cunning person","correct":false}] }
+
+];
+
+const subjectNames = {
+  rajasthan_gk: "Rajasthan GK",
+  current_affairs: "Current Affairs",
+  india_gk: "India GK",
+  reasoning: "Reasoning",
+  maths: "Maths",
+  hindi: "Hindi"
+};
+
+const subjectColors = {
+  rajasthan_gk: "#d97706",
+  current_affairs: "#dc2626",
+  india_gk: "#16a34a",
+  reasoning: "#c1440e",
+  maths: "#2563eb",
+  hindi: "#9333ea"
+};
+
+/* ============================================================
+   RENDERING LOGIC
+   ============================================================ */
+function formatQuestion(q) {
+  let text = `Q${q.qno}. ${q.hindi}\n${q.english}\n`;
+  const labels = ["A", "B", "C", "D"];
+  q.options.forEach((opt, i) => {
+    const tick = opt.correct ? " ✓" : "";
+    text += `${labels[i]}) ${opt.hi} / ${opt.en}${tick}\n`;
+  });
+  return text.trim();
+}
+
+function getFiltered() {
+  const subject = document.getElementById('subjectFilter').value;
+  const day = document.getElementById('dayFilter').value;
+  const search = document.getElementById('searchBox').value.trim().toLowerCase();
+
+  return questions.filter(q => {
+    if (subject !== 'all' && q.subject !== subject) return false;
+    if (day !== 'all' && String(q.day) !== day) return false;
+    if (search) {
+      const hay = (q.hindi + " " + q.english + " " +
+        q.options.map(o => o.hi + " " + o.en).join(" ")).toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    return true;
+  });
+}
+
+function render() {
+  const filtered = getFiltered();
+  const container = document.getElementById('questionsContainer');
+  container.innerHTML = '';
+
+  document.getElementById('stats').textContent =
+    `Showing ${filtered.length} of ${questions.length} questions`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p class="empty-msg">😕 No questions found. Filter change karke dekho.</p>';
+    return;
+  }
+
+  filtered.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.style.borderLeftColor = subjectColors[q.subject] || '#c1440e';
+
+    const header = document.createElement('div');
+    header.className = 'q-header';
+    header.innerHTML = `
+      <span class="q-tag">Q${q.qno}</span>
+      <span class="subject-tag" style="background:${subjectColors[q.subject]}18;color:${subjectColors[q.subject]};">
+        ${subjectNames[q.subject]} • Day ${q.day}
+      </span>
+    `;
+
+    const ta = document.createElement('textarea');
+    ta.id = `q-${idx}`;
+    ta.value = formatQuestion(q);
+    ta.readOnly = true;
+
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = '📋 Copy';
+    btn.onclick = () => {
+      ta.select();
+      document.execCommand('copy');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(ta.value).catch(() => {});
+      }
+      btn.textContent = '✅ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '📋 Copy';
+        btn.classList.remove('copied');
+      }, 1500);
+    };
+
+    card.appendChild(header);
+    card.appendChild(ta);
+    card.appendChild(btn);
+    container.appendChild(card);
+  });
+}
+
+function copyAll() {
+  const filtered = getFiltered();
+  if (filtered.length === 0) { alert('Koi question visible nahi hai.'); return; }
+  const all = filtered.map(formatQuestion).join('\n\n---\n\n');
+  navigator.clipboard.writeText(all).then(() => {
+    alert(`✅ ${filtered.length} questions clipboard mein copy ho gaye!`);
+  }).catch(() => {
+    alert('Copy nahi ho paya. Browser permission check karo.');
+  });
+}
+
+function downloadJSON() {
+  const dataStr = JSON.stringify(questions, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'rajasthan-jobs-questions.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function populateDays() {
+  const days = [...new Set(questions.map(q => q.day))].sort((a,b)=>a-b);
+  const sel = document.getElementById('dayFilter');
+  days.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = `Day ${d}`;
+    sel.appendChild(opt);
+  });
+}
+
+/* ============================================================
+   EVENT LISTENERS
+   ============================================================ */
+document.getElementById('subjectFilter').addEventListener('change', render);
+document.getElementById('dayFilter').addEventListener('change', render);
+document.getElementById('searchBox').addEventListener('input', render);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+populateDays();
+render();
+</script>
+
+</body>
+</html>
